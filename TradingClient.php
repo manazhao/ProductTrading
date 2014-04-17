@@ -18,7 +18,7 @@
    */
    class TradingClient { 
       # curl instance	
-      protected $root_url = "http://tim211.ucsc.edu/frontend_dev.php/service/";
+      protected $root_url = "http://128.114.63.97/index.php/service/";
       # service urls
       protected $query_setting_url = "querySetting";
       protected $query_product_url = "queryProductInfo";

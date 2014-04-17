@@ -11,7 +11,7 @@
    ###################### example queries to the server ####################
 
    # please obtain a valid token from TA and keep it secrete from other groups
-   $token = "c14fab9081a7ac1f903faebcab7d6310";
+   $token = "21119d6646e095287547854c15479a57";
 
    # create a TradingClient object and it will be used all through the trading
    # process
