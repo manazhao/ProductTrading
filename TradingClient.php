@@ -1,5 +1,8 @@
 <?php
    /**
+   * By Qi Zhao (manazhao@soe.ucsc.edu)
+   * April 16th 2014
+   *
    * @brief TradingClient which is able to talk to the server
    *
    * the client can make queries to server using cURL module. 
