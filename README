@@ -10,7 +10,8 @@ response.
 
 
 VERY IMPORTANT:
-1) trading.query.php illustrates most of the query operations for the client.
-2) trading.robot.php comes with a naive trading robot. It  is intended to demonstrate the usage of query operations and post operations (offer product, refer products, buy products). 
+1) basic.query.php demonstrates product information query and group identity verification.
+2) trading.query.php illustrates most of the query operations for the client.
+3) trading.robot.php comes with a naive trading robot. It  is intended to demonstrate the usage of query operations and post operations (offer product, refer products, buy products). 
 
 
