@@ -10,4 +10,7 @@ response.
 
 
 VERY IMPORTANT:
-1) rename the main.php.sample and work with the renamed file. Doing this will help you avoid overwriting your work.
+1) trading.query.php illustrates most of the query operations for the client.
+2) trading.robot.php comes with a naive trading robot. It  is intended to demonstrate the usage of query operations and post operations (offer product, refer products, buy products). 
+
+

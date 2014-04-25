@@ -22,12 +22,21 @@
       # service urls
       protected $query_setting_url = "querySetting";
       protected $query_product_url = "queryProductInfo";
+      protected $query_clock_url = "queryClock";
+      protected $offer_product_url = "offerProduct";
+      protected $refer_product_url ="referProduct";
+      protected $query_my_product_info_url = "queryMyProductInfo";
+      protected $query_in_transaction_url = "queryInTransactions";
+      protected $query_out_transaction_url = "queryOutTransactions";
+      protected $accept_offer_url = "acceptOffer";
       # token identify a group. It is assigned by administrator and should be kept secretely. 
       protected $token = null;
       # your group id. It is unique for each group and can be retrieved from server with the token
       protected $group_id = null;
       # number of groups in the market
       protected $num_groups = null;
+      # other groups
+      protected $other_groups = null;
       # number of products in the market
       protected $num_products = null;
 
@@ -53,6 +62,13 @@
 	 print_r($info_arr);
       }
 
+      public function get_group_id(){
+	 return $this->group_id;
+      }
+
+      public function get_other_groups(){
+	 return $this->other_groups;
+      }
       /**
       * @brief execute service query.
       *
@@ -62,9 +78,10 @@
       * @argument $post_fields arguments for the post
       * @return response as JSON string
       */
-      private function execute($service_url, $post_fields){
+      private function execute($service_url, $post_fields = array()){
 	 # initialize the server session
 	 $url = $this->root_url . $service_url;
+	 $post_fields["token"] = $this->token;
 	 $ch = curl_init($url);
 	 # client agent
 	 curl_setopt( $ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6" );
@@ -86,9 +103,12 @@
       *
       * @argument $token a token which is assigned by administrator
       */
-      public function __construct($token){
+      public function __construct($token, $localMode = false){
+	 if($localMode){
+	    $this->root_url = "http://tim211.ucsc.edu/frontend_dev.php/service/";
+	 }
 	 $this->token = $token;
-	 $response = $this->execute($this->query_setting_url, array("token" => $token));
+	 $response = $this->execute($this->query_setting_url);
 	 if(!$response){
 	    throw new Exception("error in connecting to server");
 	 }
@@ -100,17 +120,79 @@
 	 $this->num_groups = $response_obj["num_groups"];
 	 $this->num_products = $response_obj["num_products"];
 	 $this->group_id = $response_obj["group_id"];
+	 $this->other_groups = array();
+	 for($i = 1; $i <= $this->num_groups; $i++){
+	    if($i != $this->group_id){
+	       $this->other_groups[] = $i;
+	    }
+	 }
       }
-
 
       /**
       * @brief query product information
       * 
       */
       public function query_product_info(){
-	 $response = $this->execute($this->query_product_url, array("token" => $this->token));
+	 $response = $this->execute($this->query_product_url);
 	 if(!$response){
 	    throw new Exception("error in connecting to server");
+	 }
+	 return json_decode($response,true);
+      }
+
+      public function query_trading_clock(){
+	 $response = $this->execute($this->query_clock_url);
+	 if(!$response){
+	    throw new Exception("error in connecting to server");
+	 }
+	 return json_decode($response,true);
+      }
+
+      public function offer_product($to_group, $product_id, $price, $first_ref_fee, $second_ref_fee){
+	 $response = $this->execute($this->offer_product_url,array("recipient" => $to_group, "product" => $product_id, "price" => $price,
+	 "firstRefFee" => $first_ref_fee, "secondRefFee" => $second_ref_fee));
+	 if(!$response){
+	    throw new Exception("error in communication");
+	 }
+	 return json_decode($response,true);
+      }
+
+      public function refer_product($to_group, $transaction_id){
+	 $response = $this->execute($this->refer_product_url,array("recipient" => $to_group, "transactionId" => $transaction_id));
+	 if(!$response){
+	    throw new Exception("error in communication");
+	 }
+	 return json_decode($response,true);
+      }
+
+      public function accept_offer($transaction_id){
+	 $response = $this->execute($this->accept_offer_url,array("transactionId" => $transaction_id));
+	 if(!$response){
+	    throw new Exception("error in communication");
+	 }
+	 return json_decode($response,true);
+      }
+
+      public function query_my_product_info(){
+	 $response = $this->execute($this->query_my_product_info_url);
+	 if(!$response){
+	    throw new Exception("error in communication");
+	 }
+	 return json_decode($response,true);
+      }
+
+      public function query_in_transactions(){
+	 $response = $this->execute($this->query_in_transaction_url);
+	 if(!$response){
+	    throw new Exception("error in communication");
+	 }
+	 return json_decode($response,true);
+      }
+
+      public function query_out_transactions(){
+	 $response = $this->execute($this->query_out_transaction_url);
+	 if(!$response){
+	    throw new Exception("error in communication");
 	 }
 	 return json_decode($response,true);
       }
