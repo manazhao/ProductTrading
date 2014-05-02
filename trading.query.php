@@ -22,8 +22,6 @@
    # process
    $client = new TradingClient($token,$localMode);
    $aLotEqual = "=================";
-   # dump the trading client information
-   print "$aLotEqual client information $aLotEqual\n";
    $client->print_client_info();
 
    # get product information
