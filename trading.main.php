@@ -9,13 +9,16 @@
    require_once "./trading.strategy.sample.php";
 
    # parse the command line arguments to get the token
-   if(count($argv) != 2){
+   if(count($argv) < 2){
       echo "please supply the client token through the command line\n";
       exit(1);
    }
 
    # IMPORTANT: change $localMode to false when you run the script.
-   $localMode = true;
+   $localMode = false;
+   if(count($argv) == 3){
+      $localMode = true;
+   }
    $token = $argv[1];
 
    # create a TradingClient object and it will be used all through the trading
