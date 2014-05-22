@@ -103,7 +103,7 @@ function offer_strategy($client, $out_transactions){
 
    # if no response for more than one round, it means there are no human players are active. 
    # stop offering products to avoid running out of products
-   if($no_response_cnt == 2){
+   if($no_response_cnt >= 2){
       echo "!!!!!!!!!!!!!!! Hold on offering product !!!!!!!!!!!!!!!!1\n";
       return;
    }
@@ -213,6 +213,8 @@ function referral_strategy($client,$in_transactions, $out_transactions){
 
    /// make referrals to the identified recipient groups
    foreach($transaction_recipient_map as $transaction_id => $group_id ){
+	/// for debugging purpose
+	echo ">>> refer transaction $transaction_id to $group_id\n";
       $client->refer_product($group_id,$transaction_id);
       $referral_cnt++;
 

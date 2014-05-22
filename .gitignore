@@ -1,4 +1,5 @@
 launch.robots.pl
 *log.txt
 trading.query.php
+trading.main.robot.php
 test.refer.product.php
