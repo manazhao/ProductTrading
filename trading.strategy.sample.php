@@ -78,13 +78,34 @@ function offer_strategy($client, $out_transactions){
 
    // only refer to offer transactions
    $transactions = $out_transactions["offers"];
+
+   // track whether some of the offers are taken or referred
+   static $no_response_cnt = 0;
+   $offer_taken_cnt = 0;
    $status_score = array("pending" => -0.5, "expired" => -1, "purchased" => 1, "referred" => 0.5);
 
    foreach($transactions as $status => $status_transactions){
       foreach($status_transactions as $transaction){
 	 $recipient = $transaction["to.id"];
 	 $group_score_map[$recipient] += $status_score[$status];
+	 if($status == "purchase" or $status == "referred"){
+	    $offer_taken_cnt++;
+	 }
       }
+   }
+   if($offer_taken_cnt == 0){
+      $no_response_cnt++;
+   }else{
+      # there are human players active, so reset the counter
+      echo "!!!!!!!!!!!!!! No response from human players !!!!!!!!!!!!!!!!!!!\n";
+      $no_response_cnt = 0;
+   }
+
+   # if no response for more than one round, it means there are no human players are active. 
+   # stop offering products to avoid running out of products
+   if($no_response_cnt == 2){
+      echo "!!!!!!!!!!!!!!! Hold on offering product !!!!!!!!!!!!!!!!1\n";
+      return;
    }
 
    // sort the groups by their scores in descending order
@@ -165,6 +186,7 @@ function referral_strategy($client,$in_transactions, $out_transactions){
    foreach($my_consume as $product){
       $my_consume_products[$product["id"]] = 1;
    }
+
 
    $transaction_recipient_map = array();
    $all_pending_transactions = array_merge($pending_offer_transactions, $pending_referral_transactions);
