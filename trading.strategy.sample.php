@@ -88,7 +88,7 @@ function offer_strategy($client, $out_transactions){
       foreach($status_transactions as $transaction){
 	 $recipient = $transaction["to.id"];
 	 $group_score_map[$recipient] += $status_score[$status];
-	 if($status == "purchase" or $status == "referred"){
+	 if($status == "purchased" or $status == "referred"){
 	    $offer_taken_cnt++;
 	 }
       }
