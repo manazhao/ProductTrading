@@ -117,6 +117,8 @@ class TradingClient {
       curl_setopt ( $ch, CURLOPT_TIMEOUT, 60 );
       curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
       $post_str = $this->array_to_post_string($post_fields);
+	# for debug purpose
+	echo ">>>> post url: $post_str\n";
       curl_setopt($ch,CURLOPT_POSTFIELDS,$post_str);
       $response = curl_exec($ch);
       curl_close($ch);
@@ -213,6 +215,9 @@ class TradingClient {
       if(!$response){
 	 throw new Exception("error in communication");
       }
+      if($response["status"] == "fail"){
+		echo "!!!!!!!!!!!!!!!!Error in response : ". $response["message"] . "\n";
+	}
       return json_decode($response,true);
    }
 

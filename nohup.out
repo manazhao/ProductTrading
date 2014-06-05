@@ -1,0 +1,6 @@
+nohup: ignoring input
+nohup php trading.main.robot.php 317839602cb94a77dba8fe04b2404018  > 8-log.txt 2>&1 &
+nohup php trading.main.robot.php cf6511390aac510faab7a139bcac0d61  > 1-log.txt 2>&1 &
+nohup php trading.main.robot.php 27ab636663f95f7d8aecd7eae7f556e7  > 3-log.txt 2>&1 &
+nohup php trading.main.robot.php 13a129f50f8c05525bfd2112c8090fb1  > 10-log.txt 2>&1 &
+nohup php trading.main.robot.php 6c7947b97fe8b0b120cf2e1d4524780b  > 9-log.txt 2>&1 &
