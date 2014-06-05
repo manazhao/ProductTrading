@@ -94,6 +94,16 @@ class TradingClient {
    }
 
    public function get_profit(){
+	$response = $this->execute($this->query_setting_url);
+      if(!$response){
+	 throw new Exception("error in connecting to server");
+      }
+# check the status
+      $response_obj = json_decode($response,true);
+      if($response_obj["status"] == "fail"){
+	 throw new Exception($response_obj["message"]);
+      }
+      $this->profit = $response_obj["profit"];
       return $this->profit;
    }
 
@@ -163,6 +173,8 @@ class TradingClient {
 	 }
       }
    }
+   
+   
 
    /**
     * @brief query product information
