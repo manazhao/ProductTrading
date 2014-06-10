@@ -1,0 +1,25 @@
+# note on column names of product and transaction table
+
+# product table
+id: product id
+producer: group which produces the product
+consumer: group which consumers the product
+holder: group currently holds the group
+cost: production cost
+utility: utility by consuming the product
+
+
+# transaction table
+id: transaction id
+type: type of transaction, 17 for product offer and 18 for referral
+from_id: group that initiates the transaction
+to_id: the recipient of product offer or referral
+refer_id: 0 for direct product offer and a valid transaction id which refers to a previous transaction for referral.
+product: product offered/referred
+price: price named by the  producer
+first_ref_fee: first degree referral fee
+second_ref_fee:second degree referral fee
+ref_degree: referral degree, 0 for direct offer and 1 for the first time referral and 2 for 2nd time referral
+rnd: at which round the transaction happens
+expire: the round by which offer/referral will expire
+status: 1 for pending, 2 for purchased, 3 for referred and 4 for expire

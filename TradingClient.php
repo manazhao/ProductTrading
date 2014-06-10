@@ -224,7 +224,9 @@ class TradingClient {
 	public function refer_product($to_group, $transaction_id){
 		$response = $this->execute($this->refer_product_url,array("recipient" => $to_group, "transactionId" => $transaction_id));
 		if(!$response){
-			throw new Exception("error in communication");
+			echo "!!!!!!!!!!!!!!!!Error in response !!!!!!!!!!!!!!!!!!!!!!!!\n";
+			print_r($response);
+			# throw new Exception("error in communication");
 		}
 		if($response["status"] == "fail"){
 			echo "!!!!!!!!!!!!!!!!Error in response : ". $response["message"] . "\n";
